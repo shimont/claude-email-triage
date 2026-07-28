@@ -97,16 +97,12 @@ it a broadcast? Broadcast → archive.
 
 Do not guess on these. Tag nothing and list them for Shimon:
 
-- **Suspected investor / fundraising spam.** The tell is a lookalike domain
-  (`*foundercap.us` and friends), a generic subject that is just his first
-  name, name-dropping a famous fund, and near-identical copy arriving from two
-  different domains at once. Shimon asked for *investor* mail to be flagged
-  as important, which is exactly what makes mislabelling this expensive — a
-  fake one in `to-review` teaches him to distrust the label. Surface it with
-  the reason it looks fake and let him call it.
-- **Persistent cold sales outreach** that is plausibly a real business contact
-  (repeat follow-ups from a named person at a real company about a real event
-  of his).
+- **Persistent cold sales outreach that is plausibly a real business contact** —
+  repeat follow-ups from a named person at a real company about a real event of
+  his. Shimon asked for *investor* mail to be flagged as important, which is
+  what makes a wrong call here expensive in both directions: a fake in
+  `to-review` teaches him to distrust the label, and a real one archived costs
+  him a deal. Describe it and let him decide.
 - **Security/permission prompts** where acting matters but the request may be
   unwanted — OAuth app permission escalations, misconfigured domains.
 - **Health results or appointments** where "informational" versus "act on this"
@@ -117,4 +113,22 @@ Do not guess on these. Tag nothing and list them for Shimon:
 Adjustments Shimon has confirmed. Append here as the routine is tuned; these
 override the general rules above.
 
-- _(none yet — first run was 2026-07-28)_
+**2026-07-28 (first run)**
+
+- **Receipts and invoices: archive all of them, no exceptions.** Wolt, Domino's,
+  Google Play, clinic invoices, donation receipts, credit-card
+  statement-ready notices, FLYSTORE / El Al points. Confirmed he finds these by
+  search and does not want them split by tax or business relevance.
+- **Community platform notifications: archive all of them.** Luma "X registered
+  for your event" and "New follower", every Meetup notification. He reads
+  registration numbers in the Luma dashboard, not by email. This is the largest
+  recurring-volume bucket — he did not ask for a count in the report.
+- **Fundraising spam: archive it outright, do not surface it.** The tell is a
+  lookalike domain (`*foundercap.us` and friends), a subject line that is just
+  his first name, a name-dropped famous fund, and near-identical copy arriving
+  from two domains in the same minute. Two such threads were archived on his
+  instruction after being flagged.
+- Cold outreach from a *named person at a real company about a real event of
+  his* is still not archived — it stays unlabelled and gets described in chat.
+  The live example is `vahid@aetherex.app`, four follow-ups about an
+  "ElevenLabs pilot" for his Agentic Cloud Security cocktail party.

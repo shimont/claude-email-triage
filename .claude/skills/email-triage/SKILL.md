@@ -42,10 +42,19 @@ move listed in the report. The archiving decision stays with Shimon.
     `Waiting`, `FYI`, `Action`, `Programs/*`, `Reading/*`, `Events/*`,
     `Muted/*`. It marked Nintendo sign-in alerts as `Urgent`. Nothing has been
     filed under it since 2026-07-17.
-- If a Google Calendar connector is attached, it is the **microto** calendar.
-  Reut's invitations are addressed to shimon.tolts@gmail.com and live on that
-  account's calendar, which the connector cannot see. Do not try to verify
-  whether an invitation was accepted; classify from the mail alone.
+- A Google Calendar connector, when attached, signs in as microto but
+  `list_calendars` also exposes the shared calendars `shimon.tolts@gmail.com`
+  (where Reut's invitations land) and `shimon@copperhelm.com`. The primary
+  microto calendar does **not** hold those events. To check an invitation, call
+  `list_events` with `calendarId: "shimon.tolts@gmail.com"`, `fullText` set to
+  the event title from the subject line, a window of a day either side of the
+  event date, and `timeZone: "Asia/Jerusalem"`; read `responseStatus` on the
+  attendee marked `self`. Without the connector, skip the check and treat every
+  invitation as to-review.
+- Old Gmail filters file some senders straight to a label and past the inbox:
+  `Family` (Label_7, his father's mail), `Bonim` (Label_49, lodge summons),
+  `gett`, `isracard`, `Facebook`, `Linkedin`. The inbox pass never sees these,
+  so the procedure below includes a small sweep of `Family`.
 - Gmail search matches **whole threads**. `in:inbox -label:Label_69` still
   returns threads that already carry the label. Read `labelIds` on each
   message instead of trusting a negated query.
@@ -75,18 +84,27 @@ move listed in the report. The archiving decision stays with Shimon.
 1. `list_labels` to confirm `Label_69` / `Label_70` still resolve.
 2. `search_threads` with `query: "in:inbox"`, `pageSize: 50`, paging until
    `nextPageToken` is absent. The inbox runs 80–200 threads, so 2–4 pages.
-3. Partition by the `labelIds` you read on each thread's messages:
+3. `search_threads` with `query: "label:Family newer_than:7d -in:inbox"`
+   (display names work in `label:` queries; IDs do not). Anything there from a
+   person is family mail the inbox pass would miss: tag it `to-review` and
+   list it in the report. Ignore academia-mail.com and similar notifications
+   filed under the same label.
+4. Partition the inbox threads by the `labelIds` you read on each thread's
+   messages:
    - **Already `ready-to-archive`** (`Label_69` on any message): skip.
    - **Already `to-review`** (`Label_70`): run the staleness sweep below.
    - **Neither**: classify with the rules below. This is the main work and on
      a daily run it is usually 10–30 threads.
-4. Apply labels with `label_thread` (thread-level, so the whole conversation
+5. For every calendar invitation ("Invitation:", "Updated invitation") from a
+   person, look the event up as described under Mailbox facts before
+   classifying it.
+6. Apply labels with `label_thread` (thread-level, so the whole conversation
    moves together). Batch the calls in parallel. For a staleness move, call
    `label_thread` with `Label_69` and then `unlabel_thread` with `Label_70`.
-5. Verify: re-run `in:inbox` and read `labelIds` on every returned thread.
+7. Verify: re-run `in:inbox` and read `labelIds` on every returned thread.
    Every thread must now carry exactly one of the two labels or appear in the
    report's leave-alone list. Do not trust `in:inbox -label:…`.
-6. Report in the format at the end of this file.
+8. Report in the format at the end of this file.
 
 ## ready-to-archive
 
@@ -139,22 +157,29 @@ search. Safe to bulk-tag:
   Day Sponsorship how-to", CNCF ambassador list traffic, "Claude Community
   Roundup", AWS Heroes program surveys. These go to every member. Archive
   them, but give each a one-line summary in the report's *skimmed* section.
-- **Recruiter and job-board mail**: hunted.co.il and similar postings.
+- **Recruiter, consultant and job-board mail**: hunted.co.il postings, HR
+  and people-ops consultants pitching services, Meetup discussion posts that
+  are really job ads.
 - **Expert-network solicitations**: Third Bridge, AlphaSights, GLG,
   Guidepoint, Coleman, Dialectica "paid expertise request" mails, including
   every follow-up. He has never answered one; in 2018 he told Third Bridge
   not to contact him again.
-- **Fundraising and M&A spam**: lookalike domains (`*foundercap.us` and
-  friends), a subject line that is just his first name, a name-dropped famous
-  fund, near-identical copy from two domains in the same minute, and "offer
-  to purchase" or "PE firm interested in acquiring Stealth" mail. "Stealth" is
-  the placeholder his LinkedIn shows, which proves the sender never looked.
+- **Fundraising and M&A spam**: lookalike domains (`*foundercap.us`,
+  `danrcapfoundervc.us`, `oliviacapfounders.co`, `stewardsovereigngroup.com`
+  and friends), a subject line that is just his first name, a name-dropped
+  famous fund, near-identical copy from two domains in the same minute, and
+  "offer to purchase" or "PE firm interested in acquiring Stealth" mail.
+  "Stealth" is the placeholder his LinkedIn shows, which proves the sender
+  never looked.
 - **Misdirected debt collection**: `payment@amisragas.co.il` "הודעה חשובה
   מאמישראגז" addressed to קטורזה בנימין. Shimon trashes every one of these;
   the routine cannot trash, so tag it and do not surface it.
-- **Odd old accounts**: Banco del Pacífico (Ecuador) card renewals, YouTube TV
-  channel updates, Airbnb / Descript "log in to keep your account" (see
-  to-review for the exception).
+- **Odd old accounts and likely phishing**: Banco del Pacífico (Ecuador) card
+  renewals addressed to MICROTO (he has no such account; never click), YouTube
+  TV channel updates, TikTok and Slack workspace notifications.
+- **Calendar invitations he has already answered**: the calendar lookup shows
+  `accepted` or `declined` for him. He answers from his phone; the mail is
+  then plumbing.
 
 ## to-review
 
@@ -164,8 +189,12 @@ Reserve this label. It should stay small enough to clear in one sitting.
   table), forwarded threads from people he knows, Drive and Photos shares from
   named individuals, a vendor or organiser writing about one of his events
   (e.g. the automat-it event manager about the AWS Community IL party).
-- **Reut's calendar invitations** ("Invitation:" from `reutdavid2@gmail.com`).
-  Always. Put the event date in the report so he can accept from his phone.
+- **Calendar invitations he has not answered**: "Invitation:" or "Updated
+  invitation" from a person (Reut above all) where the calendar lookup shows
+  `needsAction`, or where the lookup was not possible. Put the event date in
+  the report so he can answer from his phone. Reut's invitations are never
+  left unlabelled: to-review unless the calendar proves he already answered
+  or the date has passed.
 - **Money, health, or the state, with an action attached**: brokerage
   identity verification ("Please Verify Info", login or funding problems),
   National Insurance letters, IDF reserve orders (צו מילואים), tax-authority
@@ -174,13 +203,17 @@ Reserve this label. It should stay small enough to clear in one sitting.
   anything with a legal or filing deadline.
 - **Payment requests and failed payments**: "חשבון עסקה" / "קיבלת חשבון
   עסקה" (a request for payment, not a receipt; he forwards these to Reut
-  Doron), "payment failed", "card declined", "order cancelled due to failed
-  payment" (1Password, Canva, Stripe, Amazon, Lime). Note in the report
-  whether it looks like a Micro Bright expense he would forward.
+  Doron), law-firm bills (Herzog Fox & Neeman "Bill no."), "payment failed",
+  "card declined", "order cancelled due to failed payment" (1Password, Canva,
+  Stripe, Amazon, Lime, Gett). Note in the report whether it looks like a
+  Micro Bright or Copperhelm expense he would forward.
 - **Live threads waiting on his reply**: a vendor quote about to expire, an
   open support ticket where the last message was a question to him, a
-  negotiation he is named as leading, a GitHub org join request he must
-  approve.
+  negotiation he is named as leading, an airline "confirm or decline the new
+  schedule" notice for a booked trip.
+- **GitHub org administration**: a user asking to join a team in an org he
+  owns (ClickIDF, copper-helm), a GitHub App requesting updated permissions.
+  Each is a yes/no only he can give.
 - **Program mail that names him and requires a decision**: an invitation
   addressed to him personally (a named person, "Hello Shimon", a seat or slot
   held for him), an `[Action Required]` or `[Action needed by <date>]` from a
@@ -204,13 +237,16 @@ in the inbox and roughly half were finished. For each thread that already has
 and say which in the report:
 
 - The event it was about is in the past (a calendar invitation or reminder
-  whose date has passed, a party or meeting that already happened).
+  whose date has passed, a party or meeting that already happened), or the
+  calendar lookup shows he already accepted or declined the invitation.
 - The deadline it named has passed (`[Action needed by August 25th]` on
   September 16).
-- A later message in the mailbox closes it: DocuSign "Completed", a
-  "payment succeeded" after a "payment failed", his own reply that ends the
-  exchange ("It was a user error on my side, it works now"), a "Declined:" or
-  "Accepted:" calendar reply.
+- A later message in the mailbox closes it: DocuSign "Completed", a paid
+  invoice after a "payment failed" (1Password failed on Aug 30 and Sep 1,
+  then charged $47.88 on Sep 5), his own reply that ends the exchange ("It was
+  a user error on my side, it works now"), a "Declined:" or "Accepted:"
+  calendar reply. Search for the closing message when a thread looks
+  finished; do not assume it.
 
 Anything else stays `to-review` even if it is weeks old. Never move a thread
 from a human, an investor, or the state on age alone.
@@ -224,9 +260,10 @@ Do not guess on these. Tag nothing and describe them:
   four follow-ups about an "ElevenLabs pilot" for his cocktail party).
   Shimon asked for *investor* mail to be flagged, which is what makes a
   wrong call here expensive in both directions.
-- **Security or permission prompts** where acting matters but the request may
-  be unwanted: OAuth escalations he did not initiate, a "misconfigured
-  domain" for a domain he did not know he had.
+- **Security prompts that could be either routine or an attack**: a sign-in
+  alert from a country he was not in, an OAuth grant to an app the mailbox
+  has never mentioned before. (Sign-in alerts for a device the mailbox already
+  knows, such as the Pixel 11 Pro Fold set up on 2026-09-10, are archive.)
 - **Health results or appointments** where "informational" versus "act on
   this" is genuinely ambiguous.
 
@@ -253,9 +290,15 @@ Keep it short. Sections, in this order, each omitted when empty:
 5. **Counts**: threads seen, tagged archive, tagged review, moved, left.
 6. **Noise worth a filter** (only when a sender crossed 5 threads in the last
    7 days, or a sender he unsubscribed from is still arriving): sender and
-   count. Known repeat offenders: Crunchbase (arrives twice a day, once per
-   address), htzone (unsubscribed 2026-07-18, still daily), CentOS-devel
-   (unsubscribed 2026-07-18, still arriving), Google security-alert copies.
+   count. Baseline from the four weeks to 2026-09-16, 507 threads in all:
+   Crunchbase 8 a week (twice a day, once per address), htzone 7 a week
+   (unsubscribed 2026-07-18, still daily), Luma 6 a week, Google
+   security-alert copies 5 a week, calendar reminders 3 a week, Meetup 2 to 3,
+   CentOS-devel 1 to 2 (unsubscribed 2026-07-18, still arriving). Mention a
+   sender once; repeat only when its weekly count grows.
+7. **Side notes** (rare): something the rules do not cover but he would want
+   to know, such as two subscriptions to the same product being charged, or a
+   human thread that lives outside the inbox because of an old filter.
 
 ## Calibration log
 
@@ -314,7 +357,19 @@ opened, replied to, forwarded, trashed, or ignored.
   forward it to Reut Doron to get it paid. Requests for payment are to-review.
 - **Misdirected amisragas debt notices → archive silently.** He trashed all
   seven.
-- **Staleness sweep added.** Finished to-review threads were piling up
-  (event passed, DocuSign completed, backpack deadline three weeks gone).
+- **Calendar invitations are checked against the calendar.** The connector
+  can read the shimon.tolts calendar, and it showed he had already declined
+  the Sep 24 טיפת חלב slot and accepted the Sep 14 Anthropic call while both
+  mails sat in to-review. He answers invitations from his phone, not from the
+  mail. Unanswered ones stay to-review.
+- **The `Family` label is swept.** His father's "download this file" of
+  2026-08-27 was filed there by an old filter and never reached the inbox,
+  so no run ever saw it.
+- **GitHub org-admin requests → to-review.** A team-join request from Aug 20
+  and three GitHub App permission requests were sitting unanswered; they are
+  decisions only an org owner can make.
+- **Staleness sweep added.** At the review, of 34 to-review threads in the
+  inbox 9 were resolved, 8 were past their date, and 6 were informational
+  (dividend notices, a calendar reminder, a tax-authority user code).
 - **Unlabelled items expire after 14 days.** Raising something once and
   leaving it forever just recreates the pile the routine exists to remove.

@@ -15,8 +15,9 @@ Every thread in the inbox gets sorted into one of three outcomes:
 
 The routine **only adds labels**. It never archives, deletes, marks as read,
 replies, or forwards. The one label it may remove is `to-review` on a thread
-whose event or deadline has passed, and it says so in the report. The actual
-archiving stays a human decision.
+the staleness sweep has shown to be finished (event passed, opt-in deadline
+passed, closed by a later message, or reclassified under a newer rule), and
+it says so in the report. The actual archiving stays a human decision.
 
 ## Running it
 
@@ -61,6 +62,9 @@ weeks); any of them can be struck out by saying so.
   and an abandoned `Urgent` / `Needs reply soon` / `FYI` taxonomy from
   mid-2026. Both misclassify often enough to be worse than no signal; the
   routine ignores them.
-- If a Google Calendar connector is attached it sees the **microto** calendar
-  only. Reut's invitations land on the shimon.tolts calendar, so invite
-  responses cannot be checked from the routine.
+- The Google Calendar connector signs in as microto, but `list_calendars`
+  also exposes the shared `shimon.tolts@gmail.com` calendar, which is where
+  Reut's invitations land. The skill reads Shimon's `responseStatus` there to
+  tell answered invitations from unanswered ones. The Routine only gets that
+  check if "Google Calendar" is among its connectors; with Gmail alone it
+  treats every invitation as to-review, as before.

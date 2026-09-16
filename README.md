@@ -23,20 +23,26 @@ it says so in the report. The actual archiving stays a human decision.
 
 The rules live in [`.claude/skills/email-triage/SKILL.md`](.claude/skills/email-triage/SKILL.md).
 
-- **On a schedule:** a Claude Code Routine named "Personal email triage" fires
-  daily at 07:00 Israel time (04:00 UTC; it drifts to 06:00 local when
-  daylight saving ends in late October). Each firing starts a fresh session
-  with the Gmail connector, checks out the branch that carries this skill,
-  reads `SKILL.md`, and follows it. The run report is in that session's
-  transcript. `list_triggers` from any Claude Code session shows the Routine
-  and its last run.
+- **On a schedule:** a Claude Code Routine named "Personal email triage"
+  fires daily at 07:00 Israel time (04:00 UTC; it drifts to 06:00 local when
+  daylight saving ends in late October). It fires *into the Claude Code
+  session that created it*, because that session holds the Gmail and Google
+  Calendar connectors and a checkout of this branch. Routines created from
+  inside a session cannot store connectors of their own, so a
+  fresh-session-per-run Routine made this way would have no Gmail access; if
+  a fresh session per run is wanted, create the Routine from the claude.ai
+  Routines UI, where the Gmail connector can be attached to it, and give it
+  the same prompt (it is recorded in `list_triggers`). Each run pulls this
+  branch, reads `SKILL.md`, and follows it. The run report is that session's
+  reply. `list_triggers` from any Claude Code session shows the Routine and
+  its last run.
 - **By hand:** in a session with the Gmail connector attached, ask Claude to
   triage the personal inbox, or invoke `/email-triage`.
 
 The Routine's prompt is short on purpose: it points at `SKILL.md` instead of
-duplicating it, so editing the file is the only step needed to change the
-routine's behaviour. If the skill moves to another branch, update the branch
-name in the Routine's prompt (`update_trigger`).
+duplicating it, so editing the file and pushing is the only step needed to
+change the routine's behaviour. If the skill moves to another branch, update
+the branch name in the Routine's prompt (`update_trigger`).
 
 ## Tuning it
 

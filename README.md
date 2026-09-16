@@ -32,17 +32,17 @@ The rules live in [`.claude/skills/email-triage/SKILL.md`](.claude/skills/email-
   fresh-session-per-run Routine made this way would have no Gmail access; if
   a fresh session per run is wanted, create the Routine from the claude.ai
   Routines UI, where the Gmail connector can be attached to it, and give it
-  the same prompt (it is recorded in `list_triggers`). Each run pulls this
-  branch, reads `SKILL.md`, and follows it. The run report is that session's
-  reply. `list_triggers` from any Claude Code session shows the Routine and
-  its last run.
+  the same prompt (it is recorded in `list_triggers`). The Routine's prompt
+  carries a verbatim copy of `SKILL.md` so a run never depends on GitHub
+  being reachable. The run report is that session's reply. `list_triggers`
+  from any Claude Code session shows the Routine and its last run.
 - **By hand:** in a session with the Gmail connector attached, ask Claude to
   triage the personal inbox, or invoke `/email-triage`.
 
-The Routine's prompt is short on purpose: it points at `SKILL.md` instead of
-duplicating it, so editing the file and pushing is the only step needed to
-change the routine's behaviour. If the skill moves to another branch, update
-the branch name in the Routine's prompt (`update_trigger`).
+`SKILL.md` is the source of truth and the Routine's prompt is a copy of it.
+After editing the file, refresh the prompt with `update_trigger` (a short
+preamble with the hard limits, then the file body without its front matter),
+otherwise the scheduled runs keep using the old rules.
 
 ## Tuning it
 

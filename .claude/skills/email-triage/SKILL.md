@@ -163,14 +163,21 @@ search. Safe to bulk-tag:
 - **Receipts and paid invoices**: Wolt, Domino's, Google Play / Store, Google
   Fi statements, Anthropic / OpenAI subscription receipts, Crunchbase billing,
   FLYSTORE, clinics, amisragas periodic invoices (חשבונית), credit-card
-  "statement ready" notices (Amex, isracard, cal), Interactive Brokers monthly
-  activity statements, donation receipts and donor updates (kohelet). Shimon
-  finds these by search; they do not need inbox presence. A *request* for
-  payment is not a receipt; see to-review.
+  "statement ready" notices (Amex, isracard, cal), Max "הודעה ממוקד max"
+  letter-waiting notices from `info@max-finance.co.il` (a card letter is
+  waiting in the personal area; he reads it there), Interactive Brokers
+  monthly activity statements, donation receipts and donor updates (kohelet).
+  Shimon finds these by search; they do not need inbox presence. A *request*
+  for payment is not a receipt; see to-review.
 - **Community platform notifications**: Luma "X registered", "New follower",
   "Guest update"; every Meetup notification ("new members", "posted in",
   "just scheduled"). He runs several user groups and reads the numbers in the
   Luma dashboard.
+- **Platform event invitations**: "<organiser> invited you to <event>" sent
+  through an event tool (`noreply@in10t.ai` for DevOpsDays TLV, Luma and
+  Eventbrite "You're invited" pushes). The organiser bulk-invited a list and
+  the register link is the whole ask. A personal invitation from the
+  organiser's own address is review.
 - **One-time codes, sign-in and device notices**: Battle.net, Nintendo,
   Discord, Instagram, LinkedIn, Authy, 1Password sign-in, Link, Digitel OTP,
   Netflix new-device, Google Fi device setup, Google Play settings changes,
@@ -197,6 +204,8 @@ search. Safe to bulk-tag:
   "Declined:" replies, invitations he sent himself from
   `shimon@copperhelm.com`, and any invitation the calendar lookup shows he has
   already `accepted` or `declined`, or whose event date is already past.
+  Exception: Reut's invitations stay review until the date passes, whatever
+  the calendar shows; see to-review.
 - **Program broadcasts with nothing to submit**: AWS EMEA town halls and
   round-ups, "AWS Community Day Sponsorship how-to", CNCF ambassador list
   traffic, "Claude Community Roundup". These go to every member and ask for
@@ -239,7 +248,11 @@ Reserve this label. It should stay small enough to clear in one sitting.
   invitation" from a person where the calendar lookup shows `needsAction`, or
   where the lookup was not possible, and the date is still ahead. Put the
   event date in the report so he can answer from his phone. Reut's
-  invitations are never left unlabelled.
+  invitations are never left unlabelled, and they stay review until the event
+  date is past even when the calendar shows `declined`: a declined slot from
+  her usually means the appointment has to be rebooked (he put the Sep 24
+  טיפת חלב invite back to review on 2026-09-18 after the routine had archived
+  it on the calendar's `declined`).
 - **Money, health, or the state, with an action attached**: brokerage
   identity verification ("Please Verify Info", login or funding problems),
   National Insurance letters, IDF reserve orders (צו מילואים), tax-authority
@@ -291,14 +304,20 @@ and say which in the report:
   "reclassified" in the report.
 - **Event passed**, for calendar invitations, reminders and logistics-only
   mail: the party, meeting or appointment date is behind us, or the calendar
-  lookup shows he already accepted or declined. A human thread that mentions a
-  contract, sponsorship, invoice, quote or payment is *not* logistics-only and
-  stays until a closing message exists.
+  lookup shows he already accepted or declined (not for Reut's invitations,
+  which only the date closes). A human thread that mentions a contract,
+  sponsorship, invoice, quote or payment is *not* logistics-only and stays
+  until a closing message exists.
 - **Opt-in deadline passed**: a survey, gift or preference choice,
   express-interest form, RSVP, early-bird price, or an account-deletion date
-  that is itself behind us. A passed date on a debt, pension, tax, insurance,
-  legal or state notice is the start of the consequence, not the end of the
-  matter: those stay.
+  that is itself behind us, **and** the event or benefit it applied to is
+  also behind us or gone. An expired express-interest or RSVP date for an
+  event still ahead stays review: the AWS EMEA "Workshop Training for
+  Community Leaders" (interest form due Sep 12, workshop mid-October in
+  Berlin) was moved to archive on the deadline and he put it back on
+  2026-09-18. A passed date on a debt, pension, tax, insurance, legal or state
+  notice is the start of the consequence, not the end of the matter: those
+  stay.
 - **Closed by a later message**: DocuSign "Completed", a paid invoice after a
   "payment failed" (1Password failed on Aug 30 and Sep 1, then charged $47.88
   on Sep 3), a confirmed itinerary after a travel request, his own reply that
@@ -308,7 +327,10 @@ and say which in the report:
   that finds nothing, the thread stays.
 
 Anything else stays `to-review` even if it is weeks old. Never move a thread
-from a human, an investor, or the state on age alone.
+from a human, an investor, or the state on age alone. His hand corrections
+win: a thread he has put back to `to-review` after a run moved it is not
+reclassified again under the same reasoning, and the two cases above are the
+rule changes that came from such corrections.
 
 ## Leave unlabelled and raise in the report
 
@@ -326,6 +348,12 @@ Do not guess on these. Tag nothing and describe them:
   Pro Fold set up on 2026-09-10, are archive.
 - **Health results or appointments** where "informational" versus "act on
   this" is genuinely ambiguous.
+- **Threads he has un-tagged by hand.** The Vercel "1 domain needs
+  configuration" thread of 2026-08-22 (thread `1a02778b590e17a6`) had both
+  labels stripped by hand on 2026-09-18; he is handling it himself. Do not
+  re-tag it; list it here until it leaves the inbox. The routine cannot tell
+  a hand-cleared thread from new mail, so it does not generalise this: if he
+  clears another one he will say so and it gets added here.
 
 The routine has no memory between runs, so every unlabelled thread is listed
 on every run: one line each with sender, subject and the date of its newest
@@ -365,7 +393,9 @@ Keep it short. Sections, in this order, each omitted when empty:
 Adjustments Shimon has confirmed, and (marked) adjustments inferred from how he
 actually handled mail. These override the general rules above. A confirmed
 entry wins over an inferred one, except where a later entry narrows one of
-its terms and says so.
+its terms and says so. On 2026-09-18 he answered "implement calibration" to
+the run report, which confirmed every pending entry below and the
+2026-09-18 items.
 
 **2026-07-28 (first run, confirmed in chat)**
 
@@ -373,10 +403,10 @@ its terms and says so.
   Domino's, Google Play, clinic invoices, donation receipts, credit-card
   statement-ready notices, FLYSTORE / El Al points. Confirmed he finds these
   by search and does not want them split by tax or business relevance.
-  *Narrowed 2026-09-16 (inferred, pending his veto):* the set he confirmed
-  was receipts, קבלה / חשבונית מס-קבלה and "statement ready" mail. A request
-  for payment (חשבון עסקה, "Bill no.", "please pay") was not in it and is
-  review; see below.
+  *Narrowed 2026-09-16, confirmed 2026-09-18:* the set he confirmed was
+  receipts, קבלה / חשבונית מס-קבלה and "statement ready" mail. A request for
+  payment (חשבון עסקה, "Bill no.", "please pay") was not in it and is review;
+  see below.
 - **Community platform notifications: archive all of them.** Luma "X
   registered for your event" and "New follower", every Meetup notification.
   He reads registration numbers in the Luma dashboard, not by email. This is
@@ -392,7 +422,7 @@ its terms and says so.
   live example is `vahid@aetherex.app`, four follow-ups about an "ElevenLabs
   pilot" for his Agentic Cloud Security cocktail party.
 
-**2026-09-16 (mailbox review, inferred from behaviour, pending his veto)**
+**2026-09-16 (mailbox review, inferred from behaviour; confirmed 2026-09-18)**
 
 Evidence: 768 threads had been tagged `ready-to-archive` and all but the last
 run's were archived, so he acts on that label in bulk. 76 threads had been
@@ -441,3 +471,31 @@ opened, replied to, forwarded, trashed, or ignored.
   dropped: it would have overridden the confirmed 2026-07-28 rule on
   named-person outreach, and a fresh session cannot know when something was
   first raised. The aetherex follow-ups are his call, not the routine's.
+
+**2026-09-18 (from his hand corrections between runs, confirmed in chat)**
+
+Between the 04:10 and 09:33 UTC runs he changed three labels by hand; the
+routine noticed, did not undo them, and asked. He confirmed all of it with
+"implement calibration".
+
+- **Reut's calendar invitations stay review until the event date passes.**
+  The routine had archived the Sep 24 טיפת חלב invite because the calendar
+  showed `declined`; he put it back. A declined slot from her is a rebooking
+  to do, not a closed item.
+- **A passed express-interest or RSVP deadline does not close program mail
+  for an event still ahead.** The AWS EMEA community-leader workshop
+  (interest due Sep 12, workshop mid-October) was archived on the deadline;
+  he put it back. The "opt-in deadline passed" case now also needs the event
+  itself to be behind us.
+- **Threads he un-tags by hand are left alone.** He stripped both labels from
+  the Vercel domain nag; the routine lists it under *Left unlabelled* and
+  does not re-tag it.
+- **Max "letter waiting" notices → archive.** `info@max-finance.co.il`
+  "הודעה ממוקד max" mails only say a card letter is waiting in the personal
+  area.
+- **Platform bulk event invitations → archive.** "Sharone Zitzman invited you
+  to DevOpsDays TLV 2026" via `noreply@in10t.ai` and the like are list
+  invites with a register link; a personal invite from the organiser's own
+  address stays review.
+- **Payment requests → review, receipts → archive**, confirmed as the reading
+  of the 2026-07-28 receipts rule (the Herzog "Bill no." of Sep 17 is review).
